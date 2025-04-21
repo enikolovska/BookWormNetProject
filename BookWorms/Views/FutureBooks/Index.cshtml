@@ -1,0 +1,168 @@
+﻿@model IEnumerable<BookWorms.Models.FutureBook>
+
+@{
+    ViewBag.Title = "Книги кои ќе ги читам";
+}
+
+<h1 style="color: #333333; font-size: 80px; font-weight: 700; text-transform: uppercase; letter-spacing: 5px; text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2); text-align: center;">
+    Книги кои ќе ги читам
+</h1>
+
+<div style="background-color: #a3eeb7; padding: 20px; border-radius: 5px; text-align: center; font-family: 'Poppins', sans-serif;">
+    <p style="color: #333333; font-size: 30px; font-weight: bold; text-transform: uppercase; margin-top: 20px; font-style: italic;">
+        Добредојдовте во делот за книги кои сакате да ги читате во иднина.
+    </p>
+    <p style="color: #333333; font-size: 18px;">
+        Оваа страница претставува делот од вашиот е-дневник за книги во кои се наоѓаат книгите кои сакате да ги читате во иднина.
+        Доколку сакате да додадете книга во оваа листа може слободно да ја изберете книгата од библиотеката со клик на копчето Додади нова книга во листата на книги.
+        Доколку прочитате некоја книга од оваа листа можете слободно да ја префрлите книгата во делот на прочитани книги.
+    </p>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <button onclick="window.location.href='@Url.Action("Index", "Books")'" class="btn btn-primary" style="font-size: 18px; padding: 10px 20px; background-color: #ffcccb; border-color: #ffcccb; color: white; border-radius: 5px; text-decoration: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        Додади нова книга во листата на книги
+    </button>
+</div>
+
+
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 25px;">
+    <input type="text" id="search" class="form-control" placeholder="Пребарај книги..." style="font-size: 18px; padding: 10px; margin-right: 10px; max-width: 400px;">
+    <button class="btn btn-primary" style="font-size: 18px; background-color: #87cbb9; border-color: #87cbb9;" onclick="searchBooks()">Пребарај</button>
+</div>
+
+
+<table class="table table-striped" style="background-color: #fff; margin-top: 20px;" id="myTable">
+    <thead style="background-color: #333333; color: white; text-align: center;">
+        <tr>
+            <th>Слика</th>
+            <th>Наслов</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Акции</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: center; font-size: 18px; color: #333333;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">
+                    @if (!string.IsNullOrEmpty(item.Book.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="Book Image" style="width:100px; height:auto;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>@item.Book.Title</td>
+                <td>@item.Book.Author</td>
+                <td>@item.Book.Genre</td>
+                <td>
+                    @Html.ActionLink("Детали", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                    <button class=" btn btn-link js-delete pink" data-id="@item.Id">Избриши</button>
+                    @Html.ActionLink("Пренасочи кон прочитани", "Create", "ReadBooks", new { bookId = item.BookId }, new { @class = "btn gray btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    
+    function searchBooks() {
+        var searchQuery = document.getElementById('search').value.toLowerCase();
+        var rows = document.querySelectorAll('table tbody tr');
+
+        rows.forEach(function (row) {
+            var title = row.cells[1].textContent.toLowerCase();
+            var author = row.cells[2].textContent.toLowerCase();
+            var genre = row.cells[3].textContent.toLowerCase();
+
+            if (title.includes(searchQuery) || author.includes(searchQuery) || genre.includes(searchQuery)) {
+                row.style.display = ''; 
+            } else {
+                row.style.display = 'none'; 
+            }
+        });
+    }
+</script>
+
+<style>
+    .btn {
+        font-size: 18px;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin: 10px;
+        background-color: #a3eeb7;
+        border-color: #a3eeb7;
+    }
+
+    .btn-info {
+        background-color: #a3eeb7;
+        border-color: #a3eeb7;
+    }
+
+    .gray {
+        background-color: #333;
+        border-color: #333;
+    }
+
+    .pink {
+        background-color: #ffcccb;
+        border-color: #ffcccb;
+    }
+
+    .btn-danger {
+        background-color: #ffcccb;
+        border-color: #ffcccb;
+    }
+
+    .btn-warning {
+        background-color: #333333;
+        border-color: #333333;
+    }
+
+    table.dataTable thead th::after {
+        content: none !important;
+        display: none !important;
+    }
+</style>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $("#myTable").DataTable({
+                "dom": 'lrtip' 
+            });
+
+            
+            $("#myTable").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Дали сакате да ја избришете оваа книга?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/FutureBooks/Delete/" + button.attr("data-id"),
+                            method: "GET",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">

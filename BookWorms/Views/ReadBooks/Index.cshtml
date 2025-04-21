@@ -1,0 +1,371 @@
+﻿@model IEnumerable<BookWorms.Models.ReadBook>
+
+@{
+    ViewBag.Title = "Прочитани Книги";
+}
+
+<h1 style="color: #333333; font-size: 80px; font-weight: 700; text-transform: uppercase; letter-spacing: 5px; text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2); text-align: center;">
+    Прочитани Книги
+</h1>
+
+
+
+<div style="background-color: #a3eeb7; padding: 20px; border-radius: 5px; text-align: center; font-family: 'Poppins', sans-serif;">
+    <p style="color: #333333; font-size: 30px; font-weight: bold; text-transform: uppercase; margin-top: 20px; font-style: italic;">
+        Добредојдовте во делот на прочитани книги!
+    </p>
+    <p style="color: #333333; font-size: 18px;">
+        Овде можете да најдете книги кои ги имате прочитано.
+        За секоја книга ви е овозможено да филтрирате по жанр, рејтинг и тип односно според информациите кои вие ги имате додадено при внес на книгата.
+        Доколку сакате да додадете книга во оваа листа може слободно да ја изберете книгата од библиотеката со клик на копчето Додади нова книга во листата на книги.
+    </p>
+</div>
+
+<div class="genre-filter" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+    <h4 style="color: #333333; font-family: 'Arial', sans-serif; font-size: 25px;">Филтрирај по жанр:</h4>
+    <div class="genre-icons" style="display: flex; justify-content: center; gap: 20px;">
+        <a href="#" class="genre" data-genre="Романтика" title="Романтика" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=yUGu5KXHNq3O&format=png&color=ff0000" alt="Романтика" style="width:50px; height:50px;">
+            <span style="color: #333333; font-size: 16px;">Романтика</span>
+        </a>
+        <a href="#" class="genre" data-genre="Трилер" title="Трилер" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=17910&format=png&color=000000" alt="Трилер" style="width:50px; height:50px;">
+            <span style="color: #333333; font-size: 16px;">Трилер</span>
+        </a>
+        <a href="#" class="genre" data-genre="Хорор" title="Хорор" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=LBek9Wv6aHEL&format=png&color=000000" alt="Хорор" style="width:50px; height:50px;">
+            <span style="color: #333333; font-size: 16px;">Хорор</span>
+        </a>
+        <a href="#" class="genre" data-genre="Психологија" title="Психологија" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=14748&format=png&color=000000" alt="Психологија" style="width:50px; height:50px;">
+            <span style="color: #333333; font-size: 16px;">Психологија</span>
+        </a>
+        <a href="#" class="genre" data-genre="Комедија" title="Комедија" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=11892&format=png&color=000000" alt="Комедија" style="width:50px; height:50px;">
+            <span style="color: #333333; font-size: 16px;">Комедија</span>
+        </a>
+        <a href="#" class="genre" data-genre="Драма" title="Драма" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=20848&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <span style="color: #333333; font-size: 16px;">Драма</span>
+        </a>
+    </div>
+</div>
+
+
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 25px;">
+    <input type="text" id="search" class="form-control" placeholder="Пребарај книги..." style="font-size: 18px; padding: 10px; margin-right: 10px; max-width: 400px;">
+    <button class="btn btn-primary" style="font-size: 18px; background-color: #87cbb9; border-color: #87cbb9;" onclick="searchBooks()">Пребарај</button>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <button onclick="window.location.href='@Url.Action("Index", "Books")'" class="btn btn-primary" style="font-size: 18px; padding: 10px 20px; background-color: #ffcccb; border-color: #ffcccb; color: white; border-radius: 5px; text-decoration: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        Додади нова книга во листата на книги
+    </button>
+</div>
+
+
+
+
+
+
+<div class="star-filter" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+    <h4 style="color: #333333; font-family: 'Arial', sans-serif; font-size: 25px;">Филтрирај по оценка:</h4>
+    <div class="genre-icons" style="display: flex; justify-content: center; gap: 20px;">
+
+        <a href="#" class="star" data-number="1" title="1" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <div style="color: #333333; font-size: 16px;">Една ѕвезда</div>
+        </a>
+
+
+        <a href="#" class="star" data-number="2" title="2" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <div style="color: #333333; font-size: 16px;">Две ѕвезди</div>
+        </a>
+
+
+        <a href="#" class="star" data-number="3" title="3" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <div style="color: #333333; font-size: 16px;">Три ѕвезди</div>
+        </a>
+
+
+        <a href="#" class="star" data-number="4" title="4" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <div style="color: #333333; font-size: 16px;">Четри ѕвезди</div>
+        </a>
+
+
+        <a href="#" class="star" data-number="5" title="5" style="text-decoration: none;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <img src="https://img.icons8.com/?size=100&id=qdQpy48X3Rjv&format=png&color=000000" alt="Драма" style="width:50px; height:50px;">
+            <div style="color: #333333; font-size: 16px;">Пет ѕвезди</div>
+
+        </a>
+
+    </div>
+</div>
+
+<div class="tip-filter" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+    <h4 style="color: #333333; font-family: 'Arial', sans-serif; font-size: 25px;">Филтрирај по тип:</h4>
+    <div class="genre-icons" style="display: flex; justify-content: center; gap: 20px;">
+
+        <a href="#" class="filter green " data-tip="Омилена книга" title="Омилена книга" style="text-decoration: none;">
+            <span style="color: #333333; font-size: 16px;">Омилена книга</span>
+        </a>
+
+        <a href="#" class="filter pink" data-tip="Најдобра книга" title="Најдобра книга" style="text-decoration: none;">
+            <span style="color: #333333; font-size: 16px;">Најдобра книга</span>
+        </a>
+
+        <a href="#" class="filter gray" data-tip="Најлоша книга" title="Најлоша книга" style="text-decoration: none;">
+            <span style="color: white; font-size: 16px;">Најлоша книга</span>
+        </a>
+
+        <a href="#" class="filter blue" data-tip="Книга за уживање" title="Книга за уживање" style="text-decoration: none;">
+            <span style="color: #333333; font-size: 16px;">Книга за уживање</span>
+        </a>
+
+        <a href="#" class="filter dark" data-tip="Книга која би ја прочитала повторно" title="Книга која би ја прочитала повторно" style="text-decoration: none;">
+            <span style="color: white; font-size: 16px;">Книга која би ја прочитала повторно</span>
+        </a>
+
+    </div>
+</div>
+
+<style>
+
+    .btn {
+        font-size: 18px;
+        padding: 5px 20px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin: 5px;
+        background-color: #a3eeb7;
+        border-color: #a3eeb7;
+    }
+
+    .filter {
+        font-size: 18px;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin: 10px;
+        background-color: #a3eeb7;
+        border-color: #a3eeb7;
+    }
+
+    .green {
+        background-color: #a3eeb7;
+        border-color: #a3eeb7;
+    }
+
+    .pink {
+        background-color: #ffcccb;
+        border-color: #ffcccb;
+    }
+
+    .gray {
+        background-color: #333;
+        border-color: #333;
+        color: white;
+    }
+
+    .blue {
+        background-color: #e4f1ff;
+        border-color: #e4f1ff;
+    }
+
+    .dark {
+        background-color: #87cbb9;
+        border-color: #87cbb9;
+    }
+
+
+    table.dataTable thead th::after {
+        content: none !important;
+        display: none !important;
+    }
+</style>
+
+<script>
+    
+    function searchBooks() {
+        var searchQuery = document.getElementById('search').value.toLowerCase();
+        var rows = document.querySelectorAll('table tbody tr');
+
+        rows.forEach(function (row) {
+            var title = row.cells[1].textContent.toLowerCase();
+            var author = row.cells[2].textContent.toLowerCase();
+            var genre = row.cells[3].textContent.toLowerCase();
+            var publisher = row.cells[5].textContent.toLowerCase();
+
+            if (title.includes(searchQuery) || author.includes(searchQuery) || genre.includes(searchQuery) || publisher.includes(searchQuery)) {
+                row.style.display = ''; 
+            } else {
+                row.style.display = 'none'; 
+            }
+        });
+    }
+
+    
+    document.querySelectorAll('.star').forEach(function (genreLink) {
+        genreLink.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            var genre = genreLink.getAttribute('data-number').toLowerCase();
+
+            var rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(function (row) {
+                var rowGenre = row.cells[4].textContent.toLowerCase(); 
+
+                if (rowGenre.includes(genre)) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.filter').forEach(function (genreLink) {
+        genreLink.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            var genre = genreLink.getAttribute('data-tip').toLowerCase();
+
+            var rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(function (row) {
+                var rowGenre = row.cells[7].textContent.toLowerCase(); 
+
+                if (rowGenre.includes(genre)) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.genre').forEach(function (genreLink) {
+        genreLink.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            var genre = genreLink.getAttribute('data-genre').toLowerCase();
+
+            var rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(function (row) {
+                var rowGenre = row.cells[3].textContent.toLowerCase(); 
+
+                if (rowGenre.includes(genre)) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+        });
+    });
+</script>
+
+
+<table class="table table-striped" style="background-color: #fff; margin-top: 20px;" id="myTable">
+    <thead style="background-color: #333333; color: white; text-align: center;">
+        <tr>
+            <th>Слика</th>
+            <th>Наслов</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Рејтинг</th>
+            <th>Коментар</th>
+            <th>Датум на читање</th>
+            <th>Тип</th>
+            <th>Акции</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: center; font-size: 18px; color: #333333;">
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.Id">
+                <td style="text-align: center; vertical-align: middle;">
+                    @if (!string.IsNullOrEmpty(item.Book.ImageUrl))
+                    {
+                        <img src="@item.Book.ImageUrl" alt="Book Image" style="width:100px; height:auto;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.Book.Title
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.Book.Author
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.Book.Genre
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.Rating
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.Comment
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.ReadDate.ToShortDateString()
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @item.Type
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    @Html.ActionLink("Измени", "Edit", new { id = item.Id }, new { @class = "btn pink" })
+                    <button class=" btn btn-link js-delete gray" data-id="@item.Id">Избриши</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $("#myTable").DataTable({
+                "dom": 'lrtip' 
+            });
+
+            
+            $("#myTable").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Дали сакате да ја избришете оваа книга?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/ReadBooks/Delete/" + button.attr("data-id"),
+                            method: "GET",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">

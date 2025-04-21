@@ -1,0 +1,63 @@
+﻿@model BookWorms.Models.Book
+
+@{
+    ViewBag.Title = "Додади нова книга";
+}
+
+
+<h2 style="color: #2C3E50; font-size: 45px; font-family: 'Arial', sans-serif; text-align: center; margin-bottom: 30px;">
+    Додади нова книга
+</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+        <div style="width: 50%; padding: 30px; border-radius: 8px; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); background-color: #e4f1ff;">
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                @Html.LabelFor(model => model.ImageUrl, new { @style = "font-size: 20px; font-weight: 500; color: #34495E;" })
+                @Html.TextBoxFor(model => model.ImageUrl, new { @class = "form-control", placeholder = "Внеси URL на сликата", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                @Html.LabelFor(model => model.Title, new { @style = "font-size: 20px; font-weight: 500; color: #34495E;" })
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder = "Внеси наслов на книгата", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                @Html.LabelFor(model => model.Author, new { @style = "font-size: 20px; font-weight: 500; color: #34495E;" })
+                @Html.TextBoxFor(model => model.Author, new { @class = "form-control", placeholder = "Внеси автор на книгата", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                @Html.LabelFor(model => model.Genre, new { @style = "font-size: 20px; font-weight: 500; color: #34495E;" })
+                @Html.TextBoxFor(model => model.Genre, new { @class = "form-control", placeholder = "Внеси жанр", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <p style="font-size: 20px; font-weight: 500; color: #34495E;">Содржина</p>
+                @Html.TextBoxFor(model => model.Content, new { @class = "form-control", placeholder = "Внеси содржина", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                @Html.LabelFor(model => model.ReleaseDate, new { @style = "font-size: 20px; font-weight: 500; color: #34495E;" })
+                @Html.TextBoxFor(model => model.ReleaseDate, new { @class = "form-control", type = "date", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                @Html.LabelFor(model => model.Publisher, new { @style = "font-size: 20px; font-weight: 500; color: #34495E;" })
+                @Html.TextBoxFor(model => model.Publisher, new { @class = "form-control", placeholder = "Внеси издавачка куќа", @style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 18px; border-radius: 6px; background-color: #333333; color: white; border: none; margin-top: 20px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); ">
+                Додади книга
+            </button>
+
+            <a href="@Url.Action("Index", "Books")" class="btn btn-secondary" style="width: 100%; padding: 15px; font-size: 18px; border-radius: 6px; margin-top: 10px; background-color: #ffcccb; border-color: #ffcccb; ">
+                Назад на листата
+            </a>
+        </div>
+    </div>
+}

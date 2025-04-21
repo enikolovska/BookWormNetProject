@@ -1,0 +1,125 @@
+﻿@model BookWorms.Models.ReadBook
+
+@{
+    ViewBag.Title = "Create ReadBook";
+}
+
+@if (ViewBag.IsDuplicate == true)
+{
+    <div class="alert alert-danger" style="font-size: 18px; padding: 15px; text-align: center;">
+        <strong>Грешка:</strong> Оваа книга веќе е додадена во „Прочитани книги“.
+    </div>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="@Url.Action("Index", "Books")" class="btn btn-warning green" style="font-size: 16px; padding: 10px 20px;">
+            Врати се назад кон библиотеката
+        </a>
+    </div>
+}
+
+<h2 style="color: #2C3E50; font-size: 45px; font-family: 'Arial', sans-serif; text-align: center; margin-bottom: 30px;">
+    Додади Прочитана Книга
+</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+  
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+        <div style="width: 50%; padding: 30px; border-radius: 8px; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); background-color: #e4f1ff;">
+
+            @if (Model.Book != null)
+            {
+               
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-size: 20px; font-weight: 500; color: #34495E;">Наслов на книга</label>
+                    <input type="text" class="form-control" value="@Model.Book.Title" readonly style="font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px; background-color: #f2f2f2;" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-size: 20px; font-weight: 500; color: #34495E;">Автор на книга</label>
+                    <input type="text" class="form-control" value="@Model.Book.Author" readonly style="font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px; background-color: #f2f2f2;" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-size: 20px; font-weight: 500; color: #34495E;">Жанр на книга</label>
+                    <input type="text" class="form-control" value="@Model.Book.Genre" readonly style="font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px; background-color: #f2f2f2;" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-size: 20px; font-weight: 500; color: #34495E;">URL на слика</label>
+                    <input type="text" class="form-control" value="@Model.Book.ImageUrl" readonly style="font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px; background-color: #f2f2f2;" />
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">Книгата не е најдена!</div>
+            }
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label style="font-size: 20px; font-weight: 500; color: #34495E;">Рејтинг</label>
+
+            @Html.DropDownListFor(
+                model => model.Rating,
+                new SelectList(new List<int> { 1, 2, 3, 4, 5 }, Model.Rating),
+                "-- Избери рејтинг --",
+                new { @class = "form-control", style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" }
+            )
+            @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+        </div>
+
+           
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label style="font-size: 20px; font-weight: 500; color: #34495E;">Коментар</label>
+
+            
+            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+
+            
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label style="font-size: 20px; font-weight: 500; color: #34495E;"> Датум на читање</label>
+
+           
+            @Html.EditorFor(model => model.ReadDate, new { htmlAttributes = new { @class = "form-control", type = "date", style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" } })
+            @Html.ValidationMessageFor(model => model.ReadDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label style="font-size: 20px; font-weight: 500; color: #34495E;">Тип</label>
+
+            @Html.DropDownListFor(model => model.Type, new SelectList(new List<string> { "Омилена книга", "Најдобра книга", "Најлоша книга", "Книга за уживање", "Книга која би ја прочитала повторно" }, Model.Type), "-- Избери тип --", new { @class = "form-control", style = "font-size: 18px; padding: 10px 15px; border-radius: 6px; margin-top: 8px;" })
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        </div>
+
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 18px; border-radius: 6px; background-color: #333333; color: white; border: none; margin-top: 20px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+                Додади Прочитана Книга
+            </button>
+
+            <div>
+
+                <a href="@Url.Action("Index", "ReadBooks")" class="btn btn-secondary" style="width: 100%; padding: 15px; font-size: 18px; border-radius: 6px; margin-top: 10px; background-color: #ffcccb; border-color: #ffcccb; ">
+                    Назад на листата
+                </a>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<style>
+    .green {
+        background: #a3eeb7;
+        border-color: #a3eeb7;
+        color:white;
+    }
+</style>

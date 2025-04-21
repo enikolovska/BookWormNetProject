@@ -1,0 +1,46 @@
+﻿@model BookWorms.Models.FutureBook
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2 style="color: #2C3E50; font-size: 55px; font-family: 'Arial', sans-serif; text-align: center; margin-bottom: 30px;">
+    Детали за книгата
+</h2>
+
+<div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; padding: 20px;">
+   
+    <div style="flex: 1; padding: 20px; border-radius: 8px; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); background-color: #e4f1ff;">
+        <div class="form-group" style="margin-bottom: 20px;">
+            <p style="font-size: 25px; font-weight: 500; color: #34495E;">Наслов</p>
+            <p style="font-size: 18px; color: #34495E;">@Html.DisplayFor(model => model.Title)</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <p style="font-size: 25px; font-weight: 500; color: #34495E;">Автор</p>
+            <p style="font-size: 18px; color: #34495E;">@Html.DisplayFor(model => model.Author)</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <p style="font-size: 25px; font-weight: 500; color: #34495E;">Жанр</p>
+            <p style="font-size: 18px; color: #34495E;">@Html.DisplayFor(model => model.Genre)</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <p style="font-size: 25px; font-weight: 500; color: #34495E;">Содржина</p>
+            <p style="font-size: 18px; color: #34495E;">@Html.DisplayFor(model => model.Book.Content)</p>
+        </div>
+
+    </div>
+
+    
+    <div style="flex: 0 0 40%; text-align: center;">
+        <img src="@Model.ImageUrl" alt="Image" style="width: 100%; height: auto; border-radius: 6px; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);">
+    </div>
+</div>
+
+
+<div style="text-align: center; margin-top: 30px;">
+    @Html.ActionLink("Назад на листа", "Index", null, new { @class = "btn btn-secondary", style = "padding: 10px 20px; font-size: 18px; border-radius: 6px; background-color: #333333; color: white;" })
+</div>

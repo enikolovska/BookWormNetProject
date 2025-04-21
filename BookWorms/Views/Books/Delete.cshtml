@@ -1,0 +1,11 @@
+﻿@model YourNamespace.Models.Book
+
+<h2>Delete</h2>
+<h3>Are you sure you want to delete this book?</h3>
+<div>
+    <h4>@Model.Title</h4>
+    <form method="post" action="@Url.Action("Delete", "Book", new { id = Model.BookId })">
+        <input type="submit" value="Delete" />
+        @Html.AntiForgeryToken()
+    </form>
+</div>

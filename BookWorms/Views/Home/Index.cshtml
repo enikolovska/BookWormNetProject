@@ -1,0 +1,104 @@
+﻿@{
+        Layout = null;
+        ViewBag.Title = "BookWormNet - Почетна";
+    }
+
+    <!DOCTYPE html>
+    <html lang="mk">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <style>
+
+            .title{
+                font-weight:bold;
+                font-size:80px;
+            }
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height:100vh;
+                background-color: #f8f9fa;
+            }
+
+            .container {
+                max-width: 1300px;
+                max-height: 1300px;
+                padding: 20px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+
+            .welcome-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .welcome-text {
+                padding: 20px;
+                border-radius: 10px;
+                flex: 1;
+                margin-right: 20px;
+            }
+
+            .logo-container img {
+                width: 80%;
+                height: 80%;
+            }
+
+            .btn-container {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .btn-register {
+                background-color: #ffcccb;
+                border-color: #ffcccb;
+                text-align: center;
+                color: white;
+                width: 180px;
+                height: 50px;
+            }
+
+            .btn-login {
+                background-color: #87cbb9;
+                border-color: #87cbb9;
+                text-align:center;
+                color: white;
+                width: 180px;
+                height: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="mb-4 title" style="color: #333333; font-weight: 700;">BookWormNet</h1>
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <p style="font-size: 40px; font-weight: bold;">Добредојдовте!</p>
+                    <p style="font-size: 25px;">
+                        <span style="font-style: italic; text-decoration: none; font-weight: bold;">Book</span><span style="font-weight: bold;  text-decoration: none; ">Worm</span><span style="font-style: italic; font-weight: bold; text-decoration: none; ">Net</span> 
+                        е ваш личен е-дневник за водење на евиденција за книгите кои планирате да ги читате и оние кои веќе сте ги прочитале.
+                    </p>
+                    <p style="font-size: 25px;">Започнете со креирање на вашата листа уште денес!</p>
+                </div>
+                <div class="logo-container">
+                    <img src="~/Content/images/logo pink.png"alt="Лого" />
+                </div>
+            </div>
+            <div class="btn-container">
+                <a href="@Url.Action("Register", "Account")" class="btn btn-register btn-lg">Регистрација</a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-login btn-lg">Логирање</a>
+            </div>
+        </div>
+    </body>
+    </html>
